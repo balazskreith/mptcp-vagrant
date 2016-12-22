@@ -137,18 +137,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #######################################################################
 
   Things should be set up for you to test MPTCP from the virtual machine.
+  To log in, just issue the command
+    vagrant ssh
+
   To validate that MPTCP is working from inside the vm, issue
-    vagrant ssh -c \"curl www.multipath-tcp.org\"
+    curl www.multipath-tcp.org
 
   You should get a joyful message announcing you are using MPTCP.
 
-  To log in, just issue the command
-    vagrant ssh
+  To run the iperf test to our OVH server:
+    ./mptcp-iperf-tests
 
   You can now become root with 
     sudo su
 
-  and manage this debian virtual machine.
+  and manage this virtual machine.
 
    #######################################################################
 }   
