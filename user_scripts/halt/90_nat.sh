@@ -21,6 +21,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 	sudo iptables -t nat -D POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
 
 elif [[ "$uname_str" == "Darwin" ]]; then
+	sudo sysctl -w net.inet.ip.forwarding=0
 	sudo pfctl -df /etc/pf.conf > /dev/null 2>&1;
 else
 	echo "FAILED! Host OS unknown"
