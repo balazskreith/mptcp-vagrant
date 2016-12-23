@@ -22,7 +22,14 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=1
-	echo "nat on en0 from 192.168.33.0/24 to any -> en0" | sudo pfctl -ef - >/dev/null 2>&1; 
+	iface1=$(route get 8.8.8.8| awk '$1=="interface:" {print $2}')
+	if [[ iface1 == "en0" ]]; then
+		iface2="en1"
+	else
+		iface2="en0"
+	fi
+	echo "nat on $iface1 from 192.168.33.0/24 to any -> $iface1" | sudo pfctl -ef - >/dev/null 2>&1;
+	echo "nat on $iface2 from 192.168.34.0/24 to any -> $iface2" | sudo pfctl -ef - >/dev/null 2>&1;
 else
 	echo "FAILED! Host OS unknown"
 fi
