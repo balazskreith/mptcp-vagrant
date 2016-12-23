@@ -4,21 +4,26 @@ set -x
 echo "port up nat"
 uname_str=$(uname)
 
-read interface2 ip2 gateway2 < ./second_interface.txt
-
 if [[ "$uname_str" == "Linux" ]]; then
-
-	echo "==> Set source-routing"
-	# forward packets from 192.168.34.10 to second interface
-	sudo ip rule add from 192.168.34.10 table 2
-	sudo ip route add 192.168.34.0/24 dev $interface2 scope link table 2
-	sudo ip route add default  via $gateway2  dev $interface2    table 2
 
 	echo "==> Enabling IP Masquerading on host"
 	# set masquerade on default interface
 	sudo iptables -t nat -A POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
-	# set masquerade on second interface
-	sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+
+	if [ -f ./second_interface.txt ]; then
+		read interface2 ip2 gateway2 < ./second_interface.txt
+		echo "==> Set source-routing on second interface"
+		# forward packets from 192.168.34.10 to second interface
+		sudo ip rule add from 192.168.34.10 table 2
+		sudo ip route add 192.168.34.0/24 dev $interface2 scope link table 2
+		sudo ip route add default  via $gateway2  dev $interface2    table 2
+
+		# set masquerade on second interface
+		sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+	else
+		echo "./second_interface.txt not found, you can only use one interface"
+		echo "consider to run ./start.sh"
+	fi
 
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=1
