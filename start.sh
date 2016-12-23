@@ -16,7 +16,7 @@ ip2="$(ip addr | awk '
 END { print (ip["'${interface2}'"] ) }
 ')"
 
-gateway=$(/sbin/ip route | grep default |grep wlan0 |awk '{ print $3 }')
+gateway=$(/sbin/ip route | grep default |grep ${interface2} |awk '{ print $3 }')
 
 echo "$interface2 $ip2 $gateway"
 
