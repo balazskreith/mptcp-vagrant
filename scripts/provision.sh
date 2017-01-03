@@ -7,7 +7,6 @@ host_ipv4="192.168.33.1"
 ip route del default via 10.0.2.2
 ip route add default via $host_ipv4
 
-if [ -f ./second_interface.txt ]; then
 	echo " set source routing on guest VM"
 	# packets having srcIP=192.168.33.10 are sent over eth1, through table1
 	ip rule add from 192.168.33.10  table 1
@@ -21,4 +20,3 @@ if [ -f ./second_interface.txt ]; then
 
 	# # default route for the selection process of normal internet-traffic
 	# ip route add default scope global nexthop via 192.168.33.1 dev eth1
-fi
