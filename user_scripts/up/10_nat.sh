@@ -10,8 +10,24 @@ if [[ "$uname_str" == "Linux" ]]; then
 	# set masquerade on default interface
 	sudo iptables -t nat -A POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
 
-	if [ -f ./second_interface.txt ]; then
-		read interface2 ip2 gateway2 < ./second_interface.txt
+	ifcount=$(/sbin/ip route | grep default| wc -l)
+	string=($(/sbin/ip route | grep default| awk '{print $3,$5}'))
+
+	case $ifcount in
+	0)
+		echo "error: no default route found :(, please check if you have Internet connection"
+		;;
+	1)
+		echo "one active interface detected: ${string[0]}, gateway: ${string[1]}"
+		echo "consider to enable or setup your second interface"
+		;;
+	*)
+		# there are two default interfaces (or more)
+		gateway1=${string[0]}
+		interface1=${string[1]}
+		gateway2=${string[2]}
+		interface2=${string[3]}
+		echo "we use two active interfaces: $iface1, $iface2"
 		echo "==> Set source-routing on second interface"
 		# forward packets from 192.168.34.10 to second interface
 		sudo ip rule add from 192.168.34.10 table 2
@@ -20,10 +36,8 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 		# set masquerade on second interface
 		sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
-	else
-		echo "./second_interface.txt not found, you can only use one interface"
-		echo "consider to run ./start.sh"
-	fi
+		;;
+	esac
 
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=1

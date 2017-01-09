@@ -10,15 +10,20 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 	sudo iptables -t nat -D POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
 
-	if [ -f ./second_interface.txt ]; then
-		read interface2 ip2 gateway2 < ./second_interface.txt
+	ifcount=$(/sbin/ip route | grep default| wc -l)
+	string=($(/sbin/ip route | grep default| awk '{print $3,$5}'))
 
+	if (( "$ifcount" >= 2 )); then
+		gateway1=${string[0]}
+		interface1=${string[1]}
+		gateway2=${string[2]}
+		interface2=${string[3]}
 		echo "==> Remove source-routing"
 		sudo ip rule del from 192.168.34.10 table 2
 		sudo ip route del 192.168.34.0/24 dev $interface2 scope link table 2
 		sudo ip route del default  via $gateway2  dev $interface2    table 2
 
-		# Disable IP Masquerading
+		echo "==> Disabling IP Masquerading on second interface"
 		sudo iptables -t nat -D POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
 	fi
 

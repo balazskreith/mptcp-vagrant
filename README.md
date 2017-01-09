@@ -34,10 +34,6 @@ Get it and use it:
     git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
     cd mptcp-vagrant
 
-    # For Linux user only: if you have two interfaces available to Internet,
-    # please specify the second interface name by running this script:
-    ./start.sh
-
     # only the first time:
     vagrant plugin install vagrant-triggers
 
@@ -48,7 +44,8 @@ This will:
   * download a vagrant box if this is the first time it run
   * start the virtual machine
   * setup 2 interfaces on guest VM
-  * setup MASQUERADE (NAT) on two host interfaces
+  * setup MASQUERADE (NAT) on two host interfaces.
+    Each guest interface will be mapped to a host interface.
 
 Using it
 ========
@@ -87,3 +84,5 @@ Credits
 
 Originally developed by Raphael Bauduin.
 Thanks to @mpyw for the Mac OS X NAT.
+
+For any issue or question, do not hesitate to contact me at hoang.tran (a) uclouvain.be
