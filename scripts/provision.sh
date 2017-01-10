@@ -20,3 +20,13 @@ ip route add default via $host_ipv4
 
 	# # default route for the selection process of normal internet-traffic
 	# ip route add default scope global nexthop via 192.168.33.1 dev eth1
+
+echo "configure MPTCP parameters:"
+modprobe mptcp_coupled
+modprobe mptcp_olia
+modprobe mptcp_balia
+modprobe mptcp_wvegas
+modprobe mptcp_binder
+sysctl -w net.ipv4.tcp_congestion_control=olia
+sysctl -w net.mptcp.mptcp_path_manager=default
+sysctl -w net.mptcp.mptcp_scheduler=default
