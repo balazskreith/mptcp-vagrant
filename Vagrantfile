@@ -57,6 +57,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provider "virtualbox" do |vb|
     vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on'] 
+
+    # fix boot hanging issue of (Ubuntu 14.04 + default Intel NIC)
+    # by changing type of VM's NICs to AMD
+    vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+    vb.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
