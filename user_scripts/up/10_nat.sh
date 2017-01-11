@@ -44,7 +44,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=1
 	iface1=$(route get 8.8.8.8| awk '$1=="interface:" {print $2}')
-	if [[ iface1 == "en0" ]]; then
+	if [[ $iface1 == "en0" ]]; then
 		iface2="en1"
 	else
 		iface2="en0"
