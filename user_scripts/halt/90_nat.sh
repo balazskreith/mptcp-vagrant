@@ -25,6 +25,9 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 		echo "==> Disabling IP Masquerading on second interface"
 		sudo iptables -t nat -D POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+	else
+		echo "==> Disabling IP Masquerading on IPv6"
+		sudo ip6tables -t nat -D POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 	fi
 
 elif [[ "$uname_str" == "Darwin" ]]; then

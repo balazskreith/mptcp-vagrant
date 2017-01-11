@@ -19,7 +19,9 @@ if [[ "$uname_str" == "Linux" ]]; then
 		;;
 	1)
 		echo "one active interface detected: ${string[0]}, gateway: ${string[1]}"
+		echo "try to set up dual stack NAT"
 		echo "consider to enable or setup your second interface"
+		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 		;;
 	*)
 		# there are two default interfaces (or more)
