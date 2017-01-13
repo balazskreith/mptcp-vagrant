@@ -4,7 +4,19 @@ set -x
 echo "port up nat"
 uname_str=$(uname)
 
+# this is needed for masquerading to take effect
+# on some Distros (like Debian) it is disabled by default
+enable_ip_forwarding_on_linux() {
+	echo "==> Enabling IP forwarding on host"
+	sudo sysctl -w net.ipv4.ip_forward=1
+	sudo sysctl -w net.ipv4.conf.all.forwarding=1
+	sudo sysctl -w net.ipv6.conf.all.forwarding=1
+}
+
+
 if [[ "$uname_str" == "Linux" ]]; then
+
+	enable_ip_forwarding_on_linux
 
 	echo "==> Enabling IP Masquerading on host"
 	# set masquerade on default interface
