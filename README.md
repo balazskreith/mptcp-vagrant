@@ -22,8 +22,6 @@ You need a recent vagrant and virtualbox installed. <br />
 Get it at http://www.vagrantup.com/downloads.html  <br />
 and https://www.virtualbox.org/wiki/Downloads
 
-The plugin  vagrant-trigger is also required (see below for installing it).
-
 You also need to have root access via sudo so the script can add NAT rules.
 
 Seting up
@@ -33,9 +31,6 @@ Get it and use it:
 
     git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
     cd mptcp-vagrant
-
-    # only the first time:
-    vagrant plugin install vagrant-triggers
 
     vagrant up
 
