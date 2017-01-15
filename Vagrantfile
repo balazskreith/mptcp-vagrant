@@ -75,6 +75,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # by changing type of VM's NICs to AMD
     vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
     vb.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
+    vb.customize ["modifyvm", :id, "--nictype3", "Am79C973"]
+    vb.customize ["modifyvm", :id, "--nictype4", "Am79C973"]
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
