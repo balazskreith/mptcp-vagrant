@@ -41,9 +41,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
+  # vm's eth1
   config.vm.network "private_network", ip: "192.168.33.10"
+  # manual config IPv6 on the same interface with "192.168.33.10"
+  config.vm.provision "shell", inline: "ip address add fde4:8dba:82e1::c4 dev eth1"
+  # vm's eth2
   config.vm.network "private_network", ip: "192.168.34.10"
-  config.vm.network "private_network", ip: "fde4:8dba:82e1::c4"
+  ## below config would trigger a bug in Virtualbox
+  ## causes Vagrant to crash (www.virtualbox.org/ticket/14855)
+  # config.vm.network "private_network", ip: "fde4:8dba:82e1::c4"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

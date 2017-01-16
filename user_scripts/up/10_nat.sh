@@ -13,6 +13,14 @@ enable_ip_forwarding_on_linux() {
 	sudo sysctl -w net.ipv6.conf.all.forwarding=1
 }
 
+get_hostonlyIface() {
+	hostonlyIface="$(ip route| awk '$1 == "192.168.33.0/24" {print $3}')"
+}
+
+add_IPv6_on_hostonlyIface() {
+	get_hostonlyIface
+	sudo ip addr add fde4:8dba:82e1::1/64 dev ${hostonlyIface}
+}
 
 if [[ "$uname_str" == "Linux" ]]; then
 
@@ -33,6 +41,9 @@ if [[ "$uname_str" == "Linux" ]]; then
 		echo "one active interface detected: ${string[0]}, gateway: ${string[1]}"
 		echo "try to set up dual stack NAT"
 		echo "consider to enable or setup your second interface"
+
+		add_IPv6_on_hostonlyIface
+
 		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 		;;
 	*)

@@ -7,7 +7,9 @@ host_ipv6="fde4:8dba:82e1::1"
 
 ip route del default via 10.0.2.2
 ip route add default via $host_ipv4
-ip -6 route add default via $host_ipv6
+
+ip addr add fde4:8dba:82e1::c4/64  dev eth1
+ip -6 route add default via $host_ipv6 dev eth1
 
 	echo " set source routing on guest VM"
 	# packets having srcIP=192.168.33.10 are sent over eth1, through table1
