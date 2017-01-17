@@ -13,6 +13,11 @@ del_IPv6_on_hostonlyIface() {
 	sudo ip addr del fde4:8dba:82e1::1/64 dev ${hostonlyIface}
 }
 
+disable_IPv6_masquerade() {
+	echo "==> Disabling IPv6 Masquerading"
+	sudo ip6tables -t nat -D POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+}
+
 if [[ "$uname_str" == "Linux" ]]; then
 
 	echo "==> Disabling IP Masquerading on host"
@@ -34,11 +39,10 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 		echo "==> Disabling IP Masquerading on second interface"
 		sudo iptables -t nat -D POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
-	else
-		echo "==> Disabling IP Masquerading on IPv6"
-		sudo ip6tables -t nat -D POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
-		del_IPv6_on_hostonlyIface
 	fi
+
+	disable_IPv6_masquerade
+	del_IPv6_on_hostonlyIface
 
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=0

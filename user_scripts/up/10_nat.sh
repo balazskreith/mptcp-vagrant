@@ -22,6 +22,16 @@ add_IPv6_on_hostonlyIface() {
 	sudo ip addr add fde4:8dba:82e1::1/64 dev ${hostonlyIface}
 }
 
+set_up_IPv6_masquerade() {
+	echo "==> Setting up IPv6 NAT"
+	ipv6_capable=true
+	add_IPv6_on_hostonlyIface
+	sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+}
+
+second_iface=false
+ipv6_capable=false
+
 if [[ "$uname_str" == "Linux" ]]; then
 
 	enable_ip_forwarding_on_linux
@@ -35,16 +45,12 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 	case $ifcount in
 	0)
-		echo "error: no default route found :(, please check if you have Internet connection"
+		echo "==> ERROR: no default route found :(, please check if you have Internet connection"
 		;;
 	1)
-		echo "one active interface detected: ${string[0]}, gateway: ${string[1]}"
-		echo "try to set up dual stack NAT"
-		echo "consider to enable or setup your second interface"
-
-		add_IPv6_on_hostonlyIface
-
-		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+		echo "==> ONE active interface detected: ${string[0]}, gateway: ${string[1]}"
+		echo "==> please consider to enable your second interface"
+		set_up_IPv6_masquerade
 		;;
 	*)
 		# there are two default interfaces (or more)
@@ -52,7 +58,8 @@ if [[ "$uname_str" == "Linux" ]]; then
 		interface1=${string[1]}
 		gateway2=${string[2]}
 		interface2=${string[3]}
-		echo "we use two active interfaces: $iface1, $iface2"
+		echo "==> TWO active interfaces detected: $interface1, $interface2"
+		second_iface=true
 		echo "==> Set source-routing on second interface"
 		# forward packets from 192.168.34.10 to second interface
 		sudo ip rule add from 192.168.34.10 table 2
@@ -61,6 +68,9 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 		# set masquerade on second interface
 		sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+
+		set_up_IPv6_masquerade
+		ipv6_capable=true
 		;;
 	esac
 
