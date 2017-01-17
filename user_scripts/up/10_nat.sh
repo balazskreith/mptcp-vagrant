@@ -87,3 +87,8 @@ elif [[ "$uname_str" == "Darwin" ]]; then
 else
 	echo "FAILED! Host OS unknown"
 fi
+
+# sent host status to guest via this file
+echo -e "# This file shows host's network status, which is used as input for iperf test script
+second_iface	$second_iface
+ipv6_capable	$ipv6_capable" > ./sent_to_guest/host_status
