@@ -23,10 +23,16 @@ add_IPv6_on_hostonlyIface() {
 }
 
 set_up_IPv6_masquerade() {
-	echo "==> Setting up IPv6 NAT"
-	ipv6_capable=true
-	add_IPv6_on_hostonlyIface
-	sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+	ipv6_routes=$(/sbin/ip -6 route | grep default| wc -l)
+
+	if [[ $ipv6_routes == 0 ]]; then
+		echo "==> IPv6 is not available on Host"
+	else
+		echo "==> IPv6 is available, setting up IPv6 NAT..."
+		ipv6_capable=true
+		add_IPv6_on_hostonlyIface
+		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+	fi
 }
 
 second_iface=false
@@ -70,7 +76,6 @@ if [[ "$uname_str" == "Linux" ]]; then
 		sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
 
 		set_up_IPv6_masquerade
-		ipv6_capable=true
 		;;
 	esac
 
