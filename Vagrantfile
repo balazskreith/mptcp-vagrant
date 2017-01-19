@@ -27,8 +27,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "mptcpbox"
 
-  config.ssh.username = "vagrant"
-  config.ssh.password = "vagrant"
+  # config.ssh.username = "vagrant"
+  # config.ssh.password = "vagrant"
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
