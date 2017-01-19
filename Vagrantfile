@@ -75,7 +75,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Example for VirtualBox:
   #
    config.vm.provider "virtualbox" do |vb|
-    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on'] 
 
     # fix boot hanging issue of (Ubuntu 14.04 + default Intel NIC)
