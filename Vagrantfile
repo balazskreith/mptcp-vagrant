@@ -27,6 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "mptcpbox"
 
+  config.ssh.insert_key = false
   # config.ssh.username = "vagrant"
   # config.ssh.password = "vagrant"
   # Disable automatic box update checking. If you disable this, then
