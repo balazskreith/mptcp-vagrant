@@ -77,7 +77,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 	ifcount=$(/sbin/ip route | grep default| wc -l)
 	string=($(/sbin/ip route | grep default| awk '{print $3,$5}'))
 
-	case $ifcount in
+	case $((ifcount)) in
 	0)
 		echo "==> ERROR: no default route found :(, please check if you have Internet connection"
 		;;
@@ -114,7 +114,7 @@ elif [[ "$uname_str" == "Darwin" ]]; then
 	ifcount=$(netstat -nr -f inet | grep default| wc -l)
 	string=($(netstat -nr -f inet | grep default| awk '{print $2,$6}'))
 
-	case $ifcount in
+	case $((ifcount)) in
 	0)
 		echo "==> ERROR: no default route found :(, please check if you have Internet connection"
 		;;
