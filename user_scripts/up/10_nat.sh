@@ -16,10 +16,23 @@ enable_ip_forwarding_on_linux() {
 get_hostonlyIface() {
 	hostonlyIface="$(ip route| awk '$1 == "192.168.33.0/24" {print $3}')"
 }
+get_hostonlyIface_mac() {
+	hostonlyIface=""
+	for iface in $(ifconfig -l); do
+		ip4=$(ifconfig $iface | grep "192.168.33.1")
+		if ! [ -z "$ip4" ]; then
+			hostonlyIface=$iface
+		fi
+	done
+}
 
 add_IPv6_on_hostonlyIface() {
 	get_hostonlyIface
 	sudo ip addr add fde4:8dba:82e1::1/64 dev ${hostonlyIface}
+}
+add_IPv6_on_hostonlyIface_mac() {
+	get_hostonlyIface_mac
+	sudo ifconfig ${hostonlyIface}  fde4:8dba:82e1::1/64
 }
 
 set_up_IPv6_masquerade() {
@@ -33,6 +46,21 @@ set_up_IPv6_masquerade() {
 		add_IPv6_on_hostonlyIface
 		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 	fi
+}
+set_up_IPv6_nat_on_mac() {
+	ipv6_iface=$(netstat -nr -f inet6 | awk '$1=="default" {print $4}')
+	if [ -z "$ipv6_iface" ]
+	then
+		echo "==> IPv6 is not available on Host"
+	else
+		echo "==> IPv6 is available, setting up IPv6 NAT..."
+		ipv6_capable=true
+		echo "nat on $ipv6_iface from fde4:8dba:82e1::c4/64 to any -> $ipv6_iface" > ./mac.rules
+	fi
+}
+
+load_mac_rules() {
+	sudo pfctl -evf ./mac.rules;
 }
 
 second_iface=false
@@ -81,14 +109,41 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 elif [[ "$uname_str" == "Darwin" ]]; then
 	sudo sysctl -w net.inet.ip.forwarding=1
-	iface1=$(route get 8.8.8.8| awk '$1=="interface:" {print $2}')
-	if [[ $iface1 == "en0" ]]; then
-		iface2="en1"
-	else
-		iface2="en0"
-	fi
-	echo "nat on $iface1 from 192.168.33.0/24 to any -> $iface1" | sudo pfctl -ef - >/dev/null 2>&1;
-	echo "nat on $iface2 from 192.168.34.0/24 to any -> $iface2" | sudo pfctl -ef - >/dev/null 2>&1;
+	# iface1=$(route get 8.8.8.8| awk '$1=="interface:" {print $2}')
+
+	ifcount=$(netstat -nr -f inet | grep default| wc -l)
+	string=($(netstat -nr -f inet | grep default| awk '{print $2,$6}'))
+
+	case $ifcount in
+	0)
+		echo "==> ERROR: no default route found :(, please check if you have Internet connection"
+		;;
+	1)
+		iface1=${string[0]}
+		echo "==> ONE active interface detected: ${iface1}"
+		echo "nat on $iface1 from 192.168.33.0/24 to any -> $iface1" > ./mac.rules
+		set_up_IPv6_nat_on_mac
+		load_mac_rules
+		;;
+	*)
+		iface1=${string[1]}
+		iface2=${string[3]}
+		gateway2=${string[2]}
+
+		echo "==> TWO active interfaces detected: $iface1, $iface2"
+		second_iface=true
+		echo "nat on $iface1 from 192.168.33.0/24 to any -> $iface1" > ./mac.rules
+		echo "nat on $iface2 from 192.168.34.0/24 to any -> $iface2" >> ./mac.rules
+
+		echo "==> Set source-routing on second interface"
+		# otherwise packets from second vboxnet would be sent out via the first interface
+		echo "pass in route-to ($iface2 $gateway2) from 192.168.34.0/24" >> ./mac.rules
+
+		set_up_IPv6_nat_on_mac
+
+		load_mac_rules
+		;;
+	esac
 else
 	echo "FAILED! Host OS unknown"
 fi
