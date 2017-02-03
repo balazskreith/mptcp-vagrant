@@ -13,6 +13,11 @@ del_IPv6_on_hostonlyIface() {
 	sudo ip addr del fde4:8dba:82e1::1/64 dev ${hostonlyIface}
 }
 
+disable_ip_forwarding_on_mac() {
+	sudo sysctl -w net.inet.ip.forwarding=0
+	sudo sysctl -w net.inet6.ip6.forwarding=0
+}
+
 disable_IPv6_masquerade() {
 	echo "==> Disabling IPv6 Masquerading"
 	sudo ip6tables -t nat -D POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
@@ -45,7 +50,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 	del_IPv6_on_hostonlyIface
 
 elif [[ "$uname_str" == "Darwin" ]]; then
-	sudo sysctl -w net.inet.ip.forwarding=0
+    disable_ip_forwarding_on_mac
 	sudo pfctl -df /etc/pf.conf > /dev/null 2>&1;
 else
 	echo "FAILED! Host OS unknown"

@@ -12,6 +12,10 @@ enable_ip_forwarding_on_linux() {
 	sudo sysctl -w net.ipv4.conf.all.forwarding=1
 	sudo sysctl -w net.ipv6.conf.all.forwarding=1
 }
+enable_ip_forwarding_on_mac() {
+	sudo sysctl -w net.inet.ip.forwarding=1
+	sudo sysctl -w net.inet6.ip6.forwarding=1
+}
 
 get_hostonlyIface() {
 	hostonlyIface="$(ip route| awk '$1 == "192.168.33.0/24" {print $3}')"
@@ -108,7 +112,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 	esac
 
 elif [[ "$uname_str" == "Darwin" ]]; then
-	sudo sysctl -w net.inet.ip.forwarding=1
+	enable_ip_forwarding_on_mac
 	# iface1=$(route get 8.8.8.8| awk '$1=="interface:" {print $2}')
 
 	ifcount=$(netstat -nr -f inet | grep default| wc -l)
