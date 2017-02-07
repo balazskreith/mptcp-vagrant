@@ -67,12 +67,23 @@ load_mac_rules() {
 	sudo pfctl -evf ./mac.rules;
 }
 
+# firewalld rules are needed on some distros to allow traffic from the guest VM
+add_firewalld_rules() {
+	systemctl is-enabled firewalld &> /dev/null
+	if [ $? == 0 ]; then 
+		echo "==> Adding firewalld rules" 
+		sudo firewall-cmd --zone trusted --add-source 192.168.33.0/24 > /dev/null
+		sudo firewall-cmd --zone trusted --add-source 192.168.34.0/24 > /dev/null
+	fi 
+}
+
 second_iface=false
 ipv6_capable=false
 
 if [[ "$uname_str" == "Linux" ]]; then
 
 	enable_ip_forwarding_on_linux
+	add_firewalld_rules
 
 	echo "==> Enabling IP Masquerading on host"
 	# set masquerade on default interface
