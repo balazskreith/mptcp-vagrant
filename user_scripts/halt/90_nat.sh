@@ -23,8 +23,16 @@ disable_IPv6_masquerade() {
 	sudo ip6tables -t nat -D POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 }
 
-if [[ "$uname_str" == "Linux" ]]; then
+del_firewalld_rules() {
+	systemctl is-enabled firewalld &> /dev/null
+	if [ $? == 0 ]; then 
+		echo "==> Removing firewalld rules" 
+		sudo firewall-cmd --zone trusted --remove-source 192.168.33.0/24 > /dev/null
+		sudo firewall-cmd --zone trusted --remove-source 192.168.34.0/24 > /dev/null
+	fi 
+}
 
+if [[ "$uname_str" == "Linux" ]]; then
 	echo "==> Disabling IP Masquerading on host"
 
 	sudo iptables -t nat -D POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
@@ -48,6 +56,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 	disable_IPv6_masquerade
 	del_IPv6_on_hostonlyIface
+	del_firewalld_rules
 
 elif [[ "$uname_str" == "Darwin" ]]; then
     disable_ip_forwarding_on_mac
