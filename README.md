@@ -5,6 +5,7 @@ This repo contains vagrant configurations to help you test Multipath TCP:
 
 - use virtual machine without requiring MPTCP support from the host.
 - test with multiple host interfaces.
+- test with dual-stack IPv4/IPv6.
 
 The Ubuntu box is downloaded from https://atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/, containing:
 
@@ -39,8 +40,9 @@ This will:
   * download a vagrant box if this is the first time it run
   * start the virtual machine
   * setup 2 interfaces on guest VM
-  * setup MASQUERADE (NAT) on two host interfaces.
+  * setup MASQUERADE (NAT) on two host interfaces if available.
     Each guest interface will be mapped to a host interface.
+  * setup MASQUERADE (NAT) on IPv6-enabled interface if available.
 
 Using it
 ========
@@ -62,11 +64,15 @@ This box also contains a tweaked iperf3 for multipath measurements.
 It can create MPTCP subflows at your wish, and get statistics for each subflow.
 You can refer its README.md for more information on how to use it.
 
-But for now, you can run throughput tests to our iperf server at OVH by this script:
+But for now, you can run throughput tests to our iperf server by this script:
 
-    vm:~$ ./mptcp-iperf-tests
+    vm:~$ ./run_all_tests
 
+You can also capture packet trace during iperf test by:
 
+    vm:~$ ./run_all_tests capture
+
+And dump-*.pcap file will be created in home folder.
 You stop the vm by issuing
 
     host$ vagrant halt

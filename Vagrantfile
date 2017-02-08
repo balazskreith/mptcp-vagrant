@@ -172,13 +172,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   You should get a joyful message announcing you are using MPTCP.
 
-  To run the iperf test to our OVH server:
-    ./mptcp-iperf-tests
+  To run the iperf test to our server:
+    ./run_all_tests
 
-  You can now become root with 
-    sudo su
-
-  and manage this virtual machine.
+  To capture packet trace, you can add argument: "./run_all_tests capture"
 
    #######################################################################
 }   
