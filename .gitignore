@@ -1,2 +1,4 @@
+sent_to_guest/*
+sent_to_guest/.keep
 .vagrant
 .*.swp
