@@ -107,18 +107,26 @@ if [[ "$uname_str" == "Linux" ]]; then
 		interface1=${string[1]}
 		gateway2=${string[2]}
 		interface2=${string[3]}
-		echo "==> TWO active interfaces detected: $interface1, $interface2"
-		second_iface=true
-		echo "==> Set source-routing on second interface"
-		# forward packets from 192.168.34.10 to second interface
-		sudo ip rule add from 192.168.34.10 table 2
-		sudo ip route add 192.168.34.0/24 dev $interface2 scope link table 2
-		sudo ip route add default  via $gateway2  dev $interface2    table 2
 
-		# set masquerade on second interface
-		sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+		if [[ "$gateway1" == "$gateway2" ]]; then
+			echo "Two interfaces use the same gateway, we use one interface only"
+			second_iface=false
+			set_up_IPv6_masquerade
+			break
+		else
+			echo "==> TWO active interfaces detected: $interface1, $interface2"
+			second_iface=true
+			echo "==> Set source-routing on second interface"
+			# forward packets from 192.168.34.10 to second interface
+			sudo ip rule add from 192.168.34.10 table 2
+			sudo ip route add 192.168.34.0/24 dev $interface2 scope link table 2
+			sudo ip route add default  via $gateway2  dev $interface2    table 2
 
-		set_up_IPv6_masquerade
+			# set masquerade on second interface
+			sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+
+			set_up_IPv6_masquerade
+		fi
 		;;
 	esac
 
