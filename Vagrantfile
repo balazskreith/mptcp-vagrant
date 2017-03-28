@@ -160,7 +160,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #   chef.validation_client_name = "ORGNAME-validator"
   config.vm.provision "shell", path: "scripts/provision.sh", run: "always"
   # update client test scripts as non-sudo user
-  config.vm.provision "shell", path: "scripts/update_iperf_test_scripts.sh", run: "always", privileged: false
+  #config.vm.provision "shell", path: "scripts/update_iperf_test_scripts.sh", run: "always", privileged: false
 
   config.vm.post_up_message = %{
   #######################################################################
@@ -182,10 +182,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #######################################################################
 }   
 
-  config.trigger.before :up do
+  config.trigger.after :up do
     run "./scripts/post_up.sh"
   end
-  config.trigger.before :halt do
+  config.trigger.after :halt do
     run "./scripts/post_halt.sh"
   end
 end

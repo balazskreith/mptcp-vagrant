@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# do not use this script in Vagrant anymore since it requires Internet ready
+# put in guest's /etc/init.d directory instead
+
 echo "update iperf_test_scripts"
 # this is similar to "git pull",
 # but can avoid merge conflict if we change git history.
