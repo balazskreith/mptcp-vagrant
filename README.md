@@ -80,6 +80,27 @@ You stop the vm by issuing
 This will also remove the NAT that was setup when starting the vm.
   
 
+Update the box version
+======================
+
+When there is a new box version available (on atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/),
+vagrant will notify when you do "vagrant up"
+
+You can update the box but the old environment (including VM) need to be destroyed.
+
+The process is as following:
+
+    vagrant box update
+    vagrant destroy
+    vagrant up
+
+Here you need "vagrant destroy" to destroy the current environment,
+before creating a new one based on new box.
+If you just want to try the new one but still keep the current environment,
+let's copy the mptcp-vagrant folder (or another clone of this repo)
+to another place and play with it.
+
+
 Credits
 =======
 
