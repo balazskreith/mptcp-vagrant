@@ -142,7 +142,7 @@ elif [[ "$uname_str" == "Darwin" ]]; then
 		echo "==> ERROR: no default route found :(, please check if you have Internet connection"
 		;;
 	1)
-		iface1=${string[0]}
+		iface1=${string[1]}
 		echo "==> ONE active interface detected: ${iface1}"
 		echo "nat on $iface1 from 192.168.33.0/24 to any -> $iface1" > ./mac.rules
 		set_up_IPv6_nat_on_mac
