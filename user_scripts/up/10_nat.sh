@@ -30,13 +30,16 @@ get_hostonlyIface_mac() {
 	done
 }
 
+# manually add an IPv6 address to vboxnet0/1 interface
+# due to VirtualBox nasty bug with IPv6 host-only interface
+# Look at www.virtualbox.org/ticket/14855
 add_IPv6_on_hostonlyIface() {
 	get_hostonlyIface
 	sudo ip addr add fde4:8dba:82e1::1/64 dev ${hostonlyIface}
 }
 add_IPv6_on_hostonlyIface_mac() {
 	get_hostonlyIface_mac
-	sudo ifconfig ${hostonlyIface}  fde4:8dba:82e1::1/64
+	sudo ifconfig ${hostonlyIface}  inet6  fde4:8dba:82e1::1/64
 }
 
 set_up_IPv6_masquerade() {
@@ -59,6 +62,7 @@ set_up_IPv6_nat_on_mac() {
 	else
 		echo "==> IPv6 is available, setting up IPv6 NAT..."
 		ipv6_capable=true
+		add_IPv6_on_hostonlyIface_mac
 		echo "nat on $ipv6_iface from fde4:8dba:82e1::c4/64 to any -> $ipv6_iface" >> ./mac.rules
 	fi
 }
