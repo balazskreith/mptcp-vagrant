@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Enable NAT and IP forwarding between guest and external networks
+# Also create host_status to announce to guest
 set -x
 
 echo "port up nat"
