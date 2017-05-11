@@ -33,6 +33,8 @@ Get it and use it:
     git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
     cd mptcp-vagrant
 
+    ./install_deps
+
     vagrant up
 
 This will:
