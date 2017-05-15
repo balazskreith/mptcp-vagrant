@@ -176,6 +176,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   You should get a joyful message announcing you are using MPTCP.
 
+  To confirm that the second interface NAT or IPv6 NAT works correctly,
+  you can run the pingtest
+    ./pingtest
+
   To run the iperf test to our server:
     ./run_all_tests
 

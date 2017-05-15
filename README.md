@@ -57,6 +57,11 @@ To validate all works as expected, issue this command:
 
 The outpout should be message full of joy, congratulating you for your MPTCP capabilities!
 
+To confirm that the second interface NAT or IPv6 NAT works correctly,
+you can run the pingtest
+
+    ./pingtest
+
 tweaked iperf3
 --------------
 
