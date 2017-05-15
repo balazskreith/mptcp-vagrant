@@ -54,7 +54,7 @@ set_up_IPv6_masquerade() {
 		echo "==> IPv6 is available, setting up IPv6 NAT..."
 		ipv6_capable=true
 		add_IPv6_on_hostonlyIface
-		sudo ip6tables -t nat -I POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
+		sudo ip6tables -t nat -A POSTROUTING -s fde4:8dba:82e1::c4/64 -j MASQUERADE
 	fi
 }
 set_up_IPv6_nat_on_mac() {
@@ -94,7 +94,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 	echo "==> Enabling IP Masquerading on host"
 	# set masquerade on default interface
-	sudo iptables -t nat -I POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
+	sudo iptables -t nat -A POSTROUTING -s 192.168.33.0/24 -j MASQUERADE
 
 	ifcount=$(/sbin/ip route | grep default| wc -l)
 	string=($(/sbin/ip route | grep default| awk '{print $3,$5}'))
@@ -130,7 +130,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 			sudo ip route add default  via $gateway2  dev $interface2    table 2
 
 			# set masquerade on second interface
-			sudo iptables -t nat -I POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
+			sudo iptables -t nat -A POSTROUTING -s 192.168.34.0/24 -j MASQUERADE -o $interface2
 
 			set_up_IPv6_masquerade
 		fi
