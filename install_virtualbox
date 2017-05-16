@@ -1,17 +1,16 @@
 #!/bin/bash
-#
-# Install dependencies for vagrant and virtualbox
+
+echo "Installing virtualbox"
 
 YUM_CMD=$(command -v yum)
 APT_GET_CMD=$(command -v apt-get)
 
 if [[ ! -z $YUM_CMD ]]; then
-    # for vagrant compilation
-    sudo yum install ruby-devel redhat-rpm-config zlib-devel
-
     # for virtualbox kernel module loading
     sudo yum install kernel-devel-$(uname -r)
+    sudo yum install virtualbox
 
 elif [[ ! -z $APT_GET_CMD ]]; then
-    sudo apt-get install ruby-dev zlib-dev
+    sudo apt-get install linux-headers-$(uname -r)
+    sudo apt-get install virtualbox
 fi

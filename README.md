@@ -19,21 +19,26 @@ Requirements
 
 Host OS: Currently Linux and Mac OS X hosts are supported.
 
-You need a recent vagrant and virtualbox installed. <br />
-Get it at http://www.vagrantup.com/downloads.html  <br />
-and https://www.virtualbox.org/wiki/Downloads
+You need a recent vagrant and virtualbox installed. We have scripts to quickly install them, as instructed just below.
 
 You also need to have root access via sudo so the script can add NAT rules.
 
-Seting up
-=========
+Setting up
+==========
 
-Get it and use it:
+Get it from github:
 
     git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
     cd mptcp-vagrant
 
-    ./install_deps
+Install virtualbox and vagrant if you don't have:
+
+    ./install_virtualbox
+    ./install_vagrant
+
+(If you want more recent versions, get it at http://www.vagrantup.com/downloads.html and https://www.virtualbox.org/wiki/Downloads)
+
+and now we can start:
 
     vagrant up
 
@@ -42,7 +47,7 @@ This will:
   * download a vagrant box if this is the first time it run
   * start the virtual machine
   * setup 2 interfaces on guest VM
-  * setup MASQUERADE (NAT) on two host interfaces if available.
+  * setup MASQUERADE (NAT) on two host interfaces if available. <br />
     Each guest interface will be mapped to a host interface.
   * setup MASQUERADE (NAT) on IPv6-enabled interface if available.
 
@@ -79,7 +84,7 @@ You can also capture packet trace during iperf test by:
 
     vm:~$ ./run_all_tests capture
 
-And dump-*.pcap file will be created in home folder.
+And dump-*.pcap files will be created in home folder.
 You stop the vm by issuing
 
     host$ vagrant halt
@@ -91,9 +96,10 @@ Update the box version
 ======================
 
 When there is a new box version available (on atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/),
-vagrant will notify when you do "vagrant up"
+vagrant will notify when you do "vagrant up".
 
 You can update the box but the old environment (including VM) need to be destroyed.
+Make sure that you have backed up stuff inside the VM before update the box.
 
 The process is as following:
 
@@ -103,7 +109,7 @@ The process is as following:
 
 Here you need "vagrant destroy" to destroy the current environment,
 before creating a new one based on new box.
-If you just want to try the new one but still keep the current environment,
+If you just want to try the new one but still keep the current environment safe,
 let's copy the mptcp-vagrant folder (or another clone of this repo)
 to another place and play with it.
 
@@ -113,5 +119,6 @@ Credits
 
 Originally developed by Raphael Bauduin.
 Thanks to @mpyw for the Mac OS X NAT.
+Thanks to @aclarembeau for dealing with firewalld on Fedora.
 
 For any issue or question, do not hesitate to contact me at hoang.tran (a) uclouvain.be

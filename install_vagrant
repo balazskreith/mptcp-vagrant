@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Installing vagrant"
+
+YUM_CMD=$(command -v yum)
+APT_GET_CMD=$(command -v apt-get)
+
+if [[ ! -z $YUM_CMD ]]; then
+    # for vagrant compilation
+    sudo yum install ruby-devel redhat-rpm-config zlib-devel
+    sudo yum install vagrant
+
+elif [[ ! -z $APT_GET_CMD ]]; then
+    sudo apt-get install ruby-dev zlib-dev
+    sudo apt-get install vagrant
+fi
