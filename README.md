@@ -19,7 +19,8 @@ Requirements
 
 Host OS: Currently Linux and Mac OS X hosts are supported.
 
-You need a recent vagrant and virtualbox installed. We have scripts to quickly install them, as instructed just below.
+You need a recent vagrant and virtualbox installed. They are available at http://www.vagrantup.com/downloads.html and https://www.virtualbox.org/wiki/Downloads
+If you are using Linux, we have auto install scripts in our repository below.
 
 You also need to have root access via sudo so the script can add NAT rules.
 
@@ -30,13 +31,6 @@ Get it from github:
 
     git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
     cd mptcp-vagrant
-
-Install virtualbox and vagrant if you don't have:
-
-    ./install_virtualbox
-    ./install_vagrant
-
-(If you want more recent versions, get it at http://www.vagrantup.com/downloads.html and https://www.virtualbox.org/wiki/Downloads)
 
 and now we can start:
 
@@ -117,8 +111,9 @@ to another place and play with it.
 Credits
 =======
 
-Originally developed by Raphael Bauduin.
-Thanks to @mpyw for the Mac OS X NAT.
+Originally developed by Raphael Bauduin. <br \>
+Thanks to @mpyw for the Mac OS X NAT. <br \>
 Thanks to @aclarembeau for dealing with firewalld on Fedora.
 
 For any issue or question, do not hesitate to contact me at hoang.tran (a) uclouvain.be
+

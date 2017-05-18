@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Installing vagrant"
+echo "Installing vagrant, for Linux only"
 
 YUM_CMD=$(command -v yum)
 APT_GET_CMD=$(command -v apt-get)
