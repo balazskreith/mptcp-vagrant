@@ -10,7 +10,8 @@ This repo contains vagrant configurations to help you test Multipath TCP:
 The Ubuntu box is downloaded from https://atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/, containing:
 
 - multipath TCP version 0.91
-- MPTCP socket API
+- MPTCP socket API.  <br />
+  (This is the only public API for finely control MPTCP at subflow level (create or remove subflow...). It is not yet merged to mainstreamed MPTCP. More information can be found at https://inl.info.ucl.ac.be/system/files/main_8.pdf and https://tools.ietf.org/html/draft-hesmans-mptcp-socket-01)
 - tweaked iperf3 for multipath TCP
 
 
