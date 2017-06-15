@@ -59,6 +59,7 @@ set_up_IPv6_masquerade() {
 }
 set_up_IPv6_nat_on_mac() {
 	ipv6_iface=$(netstat -nr -f inet6 |grep -m 1 "default" | awk '{print $4}')
+	ipv6_addr=$(ping6 -c 1 google.com | head -1 | awk '{print $3}')
 	if [ -z "$ipv6_iface" ]
 	then
 		echo "==> IPv6 is not available on Host"
@@ -66,7 +67,7 @@ set_up_IPv6_nat_on_mac() {
 		echo "==> IPv6 is available, setting up IPv6 NAT..."
 		ipv6_capable=true
 		add_IPv6_on_hostonlyIface_mac
-		echo "nat on $ipv6_iface from fde4:8dba:82e1::c4/64 to any -> $ipv6_iface" >> ./mac.rules
+		echo "nat on $ipv6_iface from fde4:8dba:82e1::c4/64 to any -> $ipv6_addr" >> ./mac.rules
 	fi
 }
 
