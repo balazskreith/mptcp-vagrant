@@ -7,11 +7,11 @@ This repo contains vagrant configurations to help you test Multipath TCP:
 - test with multiple host interfaces.
 - test with dual-stack IPv4/IPv6.
 
-The Ubuntu box is downloaded from https://atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/, containing:
+The Ubuntu box is downloaded from https://app.vagrantup.com/hoangtran/boxes/mptcp-iperf, containing:
 
-- multipath TCP version 0.91
+- multipath TCP version 0.92
 - MPTCP socket API.  <br />
-  (This is the only public API for finely control MPTCP at subflow level (create or remove subflow...). It is not yet merged to mainstreamed MPTCP. More information can be found at https://inl.info.ucl.ac.be/system/files/main_8.pdf and https://tools.ietf.org/html/draft-hesmans-mptcp-socket-01)
+  (This is the only public API for finely control MPTCP at subflow level (create or remove subflow...). It is not yet merged to mainstreamed MPTCP. More information can be found at https://inl.info.ucl.ac.be/system/files/main_8.pdf and https://tools.ietf.org/html/draft-hesmans-mptcp-socket-02)
 - tweaked iperf3 for multipath TCP
 
 
@@ -90,7 +90,7 @@ This will also remove the NAT that was setup when starting the vm.
 Update the box version
 ======================
 
-When there is a new box version available (on atlas.hashicorp.com/hoangtran/boxes/mptcp-iperf/),
+When there is a new box version available (on https://app.vagrantup.com/hoangtran/boxes/mptcp-iperf),
 vagrant will notify when you do "vagrant up".
 
 You can update the box but the old environment (including VM) need to be destroyed.
@@ -112,8 +112,8 @@ to another place and play with it.
 Credits
 =======
 
-Originally developed by Raphael Bauduin. <br \>
-Thanks to @mpyw for the Mac OS X NAT. <br \>
+Originally developed by Raphael Bauduin. <br />
+Thanks to @mpyw for the Mac OS X NAT. <br />
 Thanks to @aclarembeau for dealing with firewalld on Fedora.
 
 For any issue or question, do not hesitate to contact me at hoang.tran (a) uclouvain.be
