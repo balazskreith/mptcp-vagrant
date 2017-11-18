@@ -85,6 +85,14 @@ add_firewalld_rules() {
 	fi 
 }
 
+# masquerade will not work if on the host the default policy of FORWARD chain is DROP
+# (in the default table 'filter'). This may happen if the host has Docker installed
+# More info: github.com/moby/moby/issues/14041
+#            github.com/moby/moby/issues/23987
+set_default_FORWARD_policy_to_ACCEPT() {
+	sudo iptables -P FORWARD ACCEPT
+}
+
 second_iface=false
 ipv6_capable=false
 
@@ -92,6 +100,7 @@ if [[ "$uname_str" == "Linux" ]]; then
 
 	enable_ip_forwarding_on_linux
 	add_firewalld_rules
+	set_default_FORWARD_policy_to_ACCEPT
 
 	echo "==> Enabling IP Masquerading on host"
 	# set masquerade on default interface
