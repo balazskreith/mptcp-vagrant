@@ -1,17 +1,17 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-required_plugins = %w(vagrant-triggers)
+# required_plugins = %w(vagrant-triggers)
 
-plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
-if not plugins_to_install.empty?
-  puts "Installing plugins: #{plugins_to_install.join(' ')}"
-  if system "vagrant plugin install #{plugins_to_install.join(' ')}"
-    exec "vagrant #{ARGV.join(' ')}"
-  else
-    abort "Installation of one or more plugins has failed. Aborting."
-  end
-end
+# plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+# if not plugins_to_install.empty?
+#   puts "Installing plugins: #{plugins_to_install.join(' ')}"
+#   if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+#     exec "vagrant #{ARGV.join(' ')}"
+#   else
+#     abort "Installation of one or more plugins has failed. Aborting."
+#   end
+# end
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
 
@@ -189,10 +189,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #######################################################################
 }   
 
-  config.trigger.after :up do
-    run "./scripts/post_up.sh"
+  config.trigger.after :up do |trigger|
+    trigger.run = {path: "./scripts/post_up.sh"}
   end
-  config.trigger.after :halt do
-    run "./scripts/post_halt.sh"
+  config.trigger.after :halt do |trigger|
+    trigger.run = {path: "./scripts/post_halt.sh"}
   end
 end
