@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hoangtran/mptcp-iperf"
+  config.vm.box = "ubuntu/bionic64"
   # config.vm.box_version = '0.0.2'
 
   config.vm.hostname = "mptcpbox"
@@ -45,11 +45,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # vm's eth1
+  # vm's iface1
   config.vm.network "private_network", ip: "192.168.33.10"
-  # manual config IPv6 on the same interface with "192.168.33.10"
-  config.vm.provision "shell", inline: "ip address add fde4:8dba:82e1::c4/64 dev eth1"
-  # vm's eth2
+  # manual config IPv6 on the same iface1
+  config.vm.provision "shell", inline: "ip address add fde4:8dba:82e1::c4/64 dev enp0s8"
+  # vm's iface2
   config.vm.network "private_network", ip: "192.168.34.10"
   ## below config would trigger a bug in Virtualbox
   ## causes Vagrant to crash (www.virtualbox.org/ticket/14855)
