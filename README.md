@@ -51,7 +51,7 @@ To run a test, first you need to run the task for the sink:
     
 After that you need to run the scenario on the source too:
 
-    $ vagrant ssh sink
+    $ vagrant ssh source
     $ /shared/scripts/scenario3/source_task.sh
 
 The results are saved under /shared/results/scenario3
