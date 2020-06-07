@@ -1,0 +1,55 @@
+Time: Sun, 07 Jun 2020 14:11:14 GMT
+Connecting to host 192.168.53.100, port 5202
+number of requested subflows: 0
+	Subflow 1:
+		 ip src: 10.54.0.10 src port: 45930
+		 ip dst: 192.168.53.100 dst port: 5202
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  1]   0.00-1.01   sec  40.5 KBytes   329 Kbits/sec    0   15.3 KBytes       
+[  1]   1.01-2.01   sec  65.5 KBytes   538 Kbits/sec    0   18.1 KBytes       
+[  1]   2.01-3.01   sec  75.3 KBytes   617 Kbits/sec    0   25.1 KBytes       
+[  1]   3.01-4.01   sec  66.9 KBytes   548 Kbits/sec    0   37.7 KBytes       
+[  1]   4.01-5.01   sec  82.3 KBytes   674 Kbits/sec    4   29.3 KBytes       
+[  1]   5.01-6.01   sec  50.2 KBytes   411 Kbits/sec    3   26.5 KBytes       
+[  1]   6.01-7.01   sec  80.9 KBytes   662 Kbits/sec    1   26.5 KBytes       
+[  1]   7.01-8.01   sec  62.8 KBytes   515 Kbits/sec    0   29.3 KBytes       
+[  1]   8.01-9.01   sec  78.1 KBytes   640 Kbits/sec    0   29.3 KBytes       
+[  1]   9.01-10.01  sec  61.4 KBytes   503 Kbits/sec    0   29.3 KBytes       
+[  1]  10.01-11.01  sec  78.1 KBytes   640 Kbits/sec    0   32.1 KBytes       
+[  1]  11.01-12.01  sec  65.5 KBytes   536 Kbits/sec    1   26.5 KBytes       
+[  1]  12.01-13.01  sec  75.3 KBytes   617 Kbits/sec    0   32.1 KBytes       
+[  1]  13.01-14.01  sec  33.5 KBytes   274 Kbits/sec    4   22.3 KBytes       
+[  1]  14.01-15.01  sec  80.9 KBytes   663 Kbits/sec    0   27.9 KBytes       
+[  1]  15.01-16.01  sec  58.6 KBytes   480 Kbits/sec    1   22.3 KBytes       
+[  1]  16.01-17.01  sec  57.2 KBytes   468 Kbits/sec    0   23.7 KBytes       
+[  1]  17.01-18.01  sec  39.0 KBytes   320 Kbits/sec    3   16.7 KBytes       
+[  1]  18.01-19.01  sec  44.6 KBytes   366 Kbits/sec    0   22.3 KBytes       
+[  1]  19.01-20.01  sec  53.0 KBytes   434 Kbits/sec    1   16.7 KBytes       
+[  1]  20.01-21.01  sec  46.0 KBytes   377 Kbits/sec    0   20.9 KBytes       
+[  1]  21.01-22.01  sec  39.0 KBytes   320 Kbits/sec    2   16.7 KBytes       
+[  1]  22.01-23.01  sec  44.6 KBytes   365 Kbits/sec    0   18.1 KBytes       
+[  1]  23.01-24.01  sec  44.6 KBytes   366 Kbits/sec    0   19.5 KBytes       
+[  1]  24.01-25.01  sec  44.6 KBytes   366 Kbits/sec    0   20.9 KBytes       
+[  1]  25.01-26.01  sec  36.3 KBytes   297 Kbits/sec    3   15.3 KBytes       
+[  1]  26.01-27.01  sec  48.8 KBytes   400 Kbits/sec    0   20.9 KBytes       
+[  1]  27.01-28.01  sec  48.8 KBytes   400 Kbits/sec    0   20.9 KBytes       
+[  1]  28.01-29.01  sec  53.0 KBytes   434 Kbits/sec    0   20.9 KBytes       
+[  1]  29.01-30.01  sec  25.1 KBytes   205 Kbits/sec    3   15.3 KBytes       
+[  1]  30.01-31.01  sec  57.2 KBytes   468 Kbits/sec    0   19.5 KBytes       
+[  1]  31.01-32.01  sec  18.1 KBytes   149 Kbits/sec    2   11.2 KBytes       
+[  1]  32.01-33.01  sec  54.4 KBytes   446 Kbits/sec    1   16.7 KBytes       
+[  1]  33.01-34.01  sec  41.8 KBytes   342 Kbits/sec    0   16.7 KBytes       
+[  1]  34.01-35.01  sec  41.8 KBytes   343 Kbits/sec    0   18.1 KBytes       
+[  1]  35.01-36.01  sec  46.0 KBytes   377 Kbits/sec    0   19.5 KBytes       
+[  1]  36.01-37.01  sec  39.0 KBytes   320 Kbits/sec    1   20.9 KBytes       
+[  1]  37.01-38.01  sec  55.8 KBytes   457 Kbits/sec    1   19.5 KBytes       
+[  1]  38.01-39.01  sec  50.2 KBytes   411 Kbits/sec    0   23.7 KBytes       
+[  1]  39.01-40.01  sec  50.2 KBytes   411 Kbits/sec    2   18.1 KBytes       
+[  1]  40.01-41.01  sec  37.7 KBytes   308 Kbits/sec    1   20.9 KBytes       
+[  1]  41.01-42.01  sec  54.4 KBytes   445 Kbits/sec    0   19.5 KBytes       
+[  1]  42.01-42.72  sec  39.0 KBytes   449 Kbits/sec    0   19.5 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  1]   0.00-42.72  sec  2.21 MBytes   435 Kbits/sec   34             sender
+[  1]   0.00-42.72  sec  0.00 Bytes  0.00 bits/sec                  receiver
+iperf3: interrupt - the client has terminated

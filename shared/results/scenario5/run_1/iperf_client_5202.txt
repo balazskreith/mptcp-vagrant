@@ -1,0 +1,30 @@
+Time: Sun, 07 Jun 2020 14:25:50 GMT
+Connecting to host 192.168.53.100, port 5202
+	Subflow 4:
+		 ip src: 10.0.2.15 src port: 37788
+		 ip dst: 192.168.53.100 dst port: 5202
+	Subflow 3:
+		 ip src: 192.168.54.10 src port: 57161
+		 ip dst: 192.168.53.100 dst port: 5202
+	Subflow 2:
+		 ip src: 10.53.0.20 src port: 39888
+		 ip dst: 192.168.53.100 dst port: 5202
+	Subflow 1:
+		 ip src: 192.168.53.10 src port: 37614
+		 ip dst: 192.168.53.100 dst port: 5202
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  3]   0.00-1.01   sec  75.3 KBytes   612 Kbits/sec    0   16.7 KBytes       
+[  1]   0.00-1.01   sec  75.3 KBytes   612 Kbits/sec    0   16.7 KBytes       
+[  3]   1.01-2.01   sec  93.4 KBytes   766 Kbits/sec    0   22.3 KBytes       
+[  1]   1.01-2.01   sec   110 KBytes   903 Kbits/sec    0   22.3 KBytes       
+[  3]   2.01-3.01   sec   117 KBytes   960 Kbits/sec    0   27.9 KBytes       
+[  1]   2.01-3.01   sec   114 KBytes   937 Kbits/sec    0   27.9 KBytes       
+[  3]   3.01-3.48   sec  60.0 KBytes  1.03 Mbits/sec    0   32.1 KBytes       
+[  1]   3.01-3.48   sec  58.6 KBytes  1.01 Mbits/sec    0   33.5 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  3]   0.00-3.48   sec   346 KBytes   813 Kbits/sec    0             sender
+[  3]   0.00-3.48   sec  0.00 Bytes  0.00 bits/sec                  receiver
+[  1]   0.00-3.48   sec   358 KBytes   843 Kbits/sec    0             sender
+[  1]   0.00-3.48   sec  0.00 Bytes  0.00 bits/sec                  receiver
+iperf3: interrupt - the client has terminated

@@ -1,36 +1,31 @@
 About
 =====
 
-This repo contains vagrant configurations to help you test Multipath TCP:
+This repo is forked from https://github.com/hoang-tranviet/mptcp-vagrant to perform 
+fairness tests on MPTCP using different test scenarios. 
 
-- use virtual machine without requiring MPTCP support from the host.
-- test with multiple host interfaces.
-- test with dual-stack IPv4/IPv6.
+Although the original repo contains many possibility to run tests, 
+for special need I have made a couple of changes.
 
-The Ubuntu box is downloaded from https://app.vagrantup.com/hoangtran/boxes/mptcp-iperf, containing:
-
-- multipath TCP version 0.92
-- MPTCP socket API.  <br />
-  (This is the only public API for finely control MPTCP at subflow level (create or remove subflow...). It is not yet merged to mainstreamed MPTCP. More information can be found at https://inl.info.ucl.ac.be/system/files/main_8.pdf and https://tools.ietf.org/html/draft-hesmans-mptcp-socket-02)
-- tweaked iperf3 for multipath TCP
-
-
-Requirements
-============
-
-Host OS: Currently Linux and Mac OS X hosts are supported.
-
-You need a recent vagrant and virtualbox installed. They are available at http://www.vagrantup.com/downloads.html and https://www.virtualbox.org/wiki/Downloads
-If you are using Linux, we have auto install scripts in our repository below.
-
-You also need to have root access via sudo so the script can add NAT rules.
-
+ -  The Vagrantfile creates two machines: source, and sink. Source is used to run 
+ iperf clients, and sink is used to run iperf server. Although the source and sink 
+ are connected to the internet via VBox default NAT interface, 
+ the tests are performed between the two virtual machines.
+ - I also deleted most of the comments in the Vagrantfile, to see what it is doing.   
+ - Source and sink uses two network interfaces to connect each other via an internal 
+ network setup between the two VMs.
+ - Scenarios use linux namespaces, inside the source, in order to control the 
+ fullmesh between the endpoints.
+ 
+ Any of who wants to perform a test for mptcp, I highly recommend to use the iperf 
+ , which uses mptcp socket.
+ 
 Setting up
 ==========
 
 Get it from github:
 
-    git clone https://github.com/hoang-tranviet/mptcp-vagrant.git
+    git clone https://github.com/balazskreith/mptcp-vagrant.git
     cd mptcp-vagrant
 
 and now we can start:
@@ -41,76 +36,41 @@ This will:
 
   * download a vagrant box if this is the first time it run
   * start the virtual machine
-  * setup 2 interfaces on guest VM
-  * setup MASQUERADE (NAT) on two host interfaces if available. <br />
-    Each guest interface will be mapped to a host interface.
-  * setup MASQUERADE (NAT) on IPv6-enabled interface if available.
+  * setup 3 interfaces on guest VMs
+  * share the /shared folder, so you can run scenarios.
 
 Using it
 ========
 
 To validate all works as expected, issue this command:
 
-    host$ vagrant ssh 
+To run a test, first you need to run the task for the sink:
 
-    vm$ curl www.multipath-tcp.org
+    $ vagrant ssh sink
+    $ /shared/scripts/scenario3/sink_task.sh
+    
+After that you need to run the scenario on the source too:
 
-The outpout should be message full of joy, congratulating you for your MPTCP capabilities!
+    $ vagrant ssh sink
+    $ /shared/scripts/scenario3/source_task.sh
 
-To confirm that the second interface NAT or IPv6 NAT works correctly,
-you can run the pingtest
-
-    ./pingtest
+The results are saved under /shared/results/scenario3
 
 tweaked iperf3
 --------------
 
-Let's try with something more concrete :)
+This is very much the heart of the test, and this is why this box is used.
+more information: https://github.com/hoang-tranviet/mptcp-vagrant 
 
-This box also contains a tweaked iperf3 for multipath measurements.
-It can create MPTCP subflows at your wish, and get statistics for each subflow.
-You can refer its README.md for more information on how to use it.
-
-But for now, you can run throughput tests to our iperf server by this script:
-
-    vm:~$ ./run_all_tests
-
-You can also capture packet trace during iperf test by:
-
-    vm:~$ ./run_all_tests capture
-
-And dump-*.pcap files will be created in home folder.
-You stop the vm by issuing
-
-    host$ vagrant halt
-
-This will also remove the NAT that was setup when starting the vm.
-  
-
-Update the box version
+Update
 ======================
 
-When there is a new box version available (on https://app.vagrantup.com/hoangtran/boxes/mptcp-iperf),
-vagrant will notify when you do "vagrant up".
-
-You can update the box but the old environment (including VM) need to be destroyed.
-Make sure that you have backed up stuff inside the VM before update the box.
-
-The process is as following:
-
-    vagrant box update
-    vagrant destroy
-    vagrant up
-
-Here you need "vagrant destroy" to destroy the current environment,
-before creating a new one based on new box.
-If you just want to try the new one but still keep the current environment safe,
-let's copy the mptcp-vagrant folder (or another clone of this repo)
-to another place and play with it.
-
+Well, feel free to make PR, or anything, I am not gonna stop you.
 
 Credits
 =======
+
+The repo was forked from https://github.com/hoang-tranviet/mptcp-vagrant 
 
 Originally developed by Raphael Bauduin. <br />
 Thanks to @mpyw for the Mac OS X NAT. <br />
