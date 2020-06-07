@@ -1358,3 +1358,9 @@ Accepted connection from 10.53.0.10, port 33840
 [  1]   0.00-120.47 sec  9.32 MBytes   649 Kbits/sec                  receiver
 writing results to json file: results/0/iperf_1591543351_server_isReceiver.json 
 
+netannounce: binding socket to local addr
+got scheduler:  return = 0 
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated

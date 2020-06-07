@@ -2588,3 +2588,9 @@ Accepted connection from 192.168.53.10, port 59272
 [  2]   0.00-120.53 sec  26.5 MBytes  1.84 Mbits/sec                  receiver
 writing results to json file: results/0/iperf_1591543351_server_isReceiver.json 
 
+netannounce: binding socket to local addr
+got scheduler:  return = 0 
+-----------------------------------------------------------
+Server listening on 5202
+-----------------------------------------------------------
+iperf3: interrupt - the server has terminated

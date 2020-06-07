@@ -70,11 +70,8 @@ Well, feel free to make PR, or anything, I am not gonna stop you.
 Credits
 =======
 
-The repo was forked from https://github.com/hoang-tranviet/mptcp-vagrant 
+The repo was forked from https://github.com/hoang-tranviet/mptcp-vagrant.
+But if you have any questions related to the test you can perform using this repo, 
+please write to me, if you have questions about mptcp, please do not write to me.
 
-Originally developed by Raphael Bauduin. <br />
-Thanks to @mpyw for the Mac OS X NAT. <br />
-Thanks to @aclarembeau for dealing with firewalld on Fedora.
-
-For any issue or question, do not hesitate to contact me at hoang.tran (a) uclouvain.be
 
