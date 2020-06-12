@@ -1,7 +1,7 @@
 About
 =====
 
-This repo is forked from https://github.com/hoang-tranviet/mptcp-vagrant to perform 
+This repo forked from https://github.com/hoang-tranviet/mptcp-vagrant to perform 
 fairness tests on MPTCP using different test scenarios. 
 
 Although the original repo contains many possibility to run tests, 
@@ -12,12 +12,12 @@ for special need I have made a couple of changes.
  are connected to the internet via VBox default NAT interface, 
  the tests are performed between the two virtual machines.
  - I also deleted most of the comments in the Vagrantfile, to see what it is doing.   
- - Source and sink uses two network interfaces to connect each other via an internal 
+ - Source and sink use two networks interfaces to connect each other via an internal 
  network setup between the two VMs.
  - Scenarios use linux namespaces, inside the source, in order to control the 
  fullmesh between the endpoints.
  
- Any of who wants to perform a test for mptcp, I highly recommend to use the iperf 
+ Any of who wants to perform a test for mptcp, I highly recommend using the iperf 
  , which uses mptcp socket.
  
 Setting up
@@ -70,7 +70,7 @@ Well, feel free to make PR, or anything, I am not gonna stop you.
 Credits
 =======
 
-The repo was forked from https://github.com/hoang-tranviet/mptcp-vagrant.
+The repo forked from https://github.com/hoang-tranviet/mptcp-vagrant.
 But if you have any questions related to the test you can perform using this repo, 
 please write to me, if you have questions about mptcp, please do not write to me.
 
