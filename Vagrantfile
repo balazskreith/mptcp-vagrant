@@ -30,13 +30,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
       vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
       
-      # For scenario 3 we need to turn it on
+      # We don't need it, it just took my time to figure out the following the lines.
       # vb.customize ["bandwidthctl", :id, "add", "Limit1", "--type", "network", "--limit", "1m"]
       # vb.customize ["modifyvm", :id, "--nicbandwidthgroup2", "Limit1"]
-      # vb.customize ["bandwidthctl", :id, "add", "Limit2", "--type", "network", "--limit", "1m"]
-      # vb.customize ["modifyvm", :id, "--nicbandwidthgroup3", "Limit1"]
-      # vb.customize ["bandwidthctl", :id, "add", "Limit3", "--type", "network", "--limit", "1m"]
-      # vb.customize ["modifyvm", :id, "--nicbandwidthgroup4", "Limit1"]
     
     end
     
@@ -84,7 +80,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   config.vm.post_up_message = %{
   #######################################################################
-    vagrant ssh
+    vagrant ssh [sink/source]
     curl www.multipath-tcp.org
    #######################################################################
   }   
